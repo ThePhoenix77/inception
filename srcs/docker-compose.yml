@@ -1,0 +1,55 @@
+services:
+  mariadb:
+    build: ./requirements/mariadb
+    container_name: mariadb_container
+    env_file: .env
+    volumes:
+      - /home/tboussad/data/mariadb_data:/var/lib/mysql
+    networks:
+      - docker-network
+    restart: always
+  
+  redis:
+    build: ./requirements/bonus/redis
+    container_name: redis_container
+    networks:
+      - docker-network
+    restart: always
+
+  wordpress:
+    build: ./requirements/wordpress
+    container_name: wordpress_container
+    environment:
+      - WORDPRESS_DB_HOST=mariadb:3306
+      - WORDPRESS_DB_USER=wp_user
+      - WORDPRESS_DB_PASSWORD=wp_pass
+      - WORDPRESS_DB_NAME=wordpress
+    volumes:
+      - /home/tboussad/data/wordpress_data:/var/www/wordpress
+      - /home/tboussad/inception/srcs/requirements/wordpress/tools/wp-config.php:/var/www/html/wp-config.php
+    networks:
+      - docker-network
+    restart: always
+    expose:
+      - "80"
+      - "9000"
+
+  nginx:
+    build: ./requirements/nginx
+    container_name: nginx_container
+    ports:
+      - "443:443"
+    volumes:
+      - /home/tboussad/data/wordpress_data:/var/www/wordpress
+    networks:
+      - docker-network
+    restart: always
+
+
+volumes:
+  wordpress_data:
+  mariadb_data:
+
+networks:
+  docker-network:
+    driver: bridge
