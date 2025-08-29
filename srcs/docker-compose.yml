@@ -1,24 +1,39 @@
 services:
   mariadb:
     build: ./requirements/mariadb
-    container_name: mariadb_container
+    container_name: mariadb
     env_file: .env
     volumes:
       - /home/tboussad/data/mariadb_data:/var/lib/mysql
     networks:
       - docker-network
+    environment:
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wp_user
+      - MYSQL_PASSWORD=wp_pass
+      - MYSQL_ROOT_PASSWORD=rootpass
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "wpuser", "-pwppass"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: always
+    # ports:
+    #   - "3307:3306"
   
   redis:
     build: ./requirements/bonus/redis
-    container_name: redis_container
+    container_name: redis
     networks:
       - docker-network
     restart: always
 
   wordpress:
+    depends_on:
+      mariadb:
+        condition: service_healthy
     build: ./requirements/wordpress
-    container_name: wordpress_container
+    container_name: wordpress
     environment:
       - WORDPRESS_DB_HOST=mariadb:3306
       - WORDPRESS_DB_USER=wp_user
@@ -29,14 +44,14 @@ services:
       - /home/tboussad/inception/srcs/requirements/wordpress/tools/wp-config.php:/var/www/html/wp-config.php
     networks:
       - docker-network
-    restart: always
     expose:
       - "80"
       - "9000"
+    restart: always
 
   nginx:
     build: ./requirements/nginx
-    container_name: nginx_container
+    container_name: nginx
     ports:
       - "443:443"
     volumes:
@@ -44,7 +59,6 @@ services:
     networks:
       - docker-network
     restart: always
-
 
 volumes:
   wordpress_data:
