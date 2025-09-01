@@ -8,22 +8,22 @@ services:
     networks:
       - docker-network
     environment:
-      - MYSQL_DATABASE=wordpress
-      - MYSQL_USER=wp_user
-      - MYSQL_PASSWORD=wp_pass
-      - MYSQL_ROOT_PASSWORD=rootpass
+      - DB_NAME=wordpress
+      - DB_USER=wp_user
+      - DB_PASS=wp_pass
+      - DB_ROOT_PASSWORD=rootpass
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "wpuser", "-pwppass"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$DB_ROOT_PASSWORD"]
       interval: 10s
       timeout: 5s
       retries: 5
     restart: always
-    # ports:
-    #   - "3307:3306"
   
   redis:
     build: ./requirements/bonus/redis
     container_name: redis
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
     networks:
       - docker-network
     restart: always
@@ -35,13 +35,17 @@ services:
     build: ./requirements/wordpress
     container_name: wordpress
     environment:
-      - WORDPRESS_DB_HOST=mariadb:3306
-      - WORDPRESS_DB_USER=wp_user
-      - WORDPRESS_DB_PASSWORD=wp_pass
-      - WORDPRESS_DB_NAME=wordpress
+      WORDPRESS_DB_HOST: mariadb:3306
+      WORDPRESS_DB_USER: wp_user
+      WORDPRESS_DB_PASSWORD: wp_pass
+      WORDPRESS_DB_NAME: wordpress
+      WP_ADMIN_USER: admin
+      WP_ADMIN_PASSWORD: adminpass
+      WP_ADMIN_EMAIL: admin@example.com
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     volumes:
       - /home/tboussad/data/wordpress_data:/var/www/wordpress
-      - /home/tboussad/inception/srcs/requirements/wordpress/tools/wp-config.php:/var/www/html/wp-config.php
     networks:
       - docker-network
     expose:

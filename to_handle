@@ -1,328 +1,45 @@
-# docker compose -f srcs/docker-compose.yml down
-# docker compose -f srcs/docker-compose.yml build
-# #1 [internal] load local bake definitions
-# #1 reading from stdin 1.94kB done
-# #1 DONE 0.0s
 
-# #2 [mariadb internal] load build definition from Dockerfile
-# #2 transferring dockerfile: 453B 0.0s done
-# #2 DONE 0.0s
-
-# #3 [redis internal] load build definition from Dockerfile
-# #3 transferring dockerfile: 231B 0.0s done
-# #3 DONE 0.0s
-
-# #4 [wordpress internal] load build definition from Dockerfile
-# #4 transferring dockerfile: 1.10kB 0.0s done
-# #4 DONE 0.0s
-
-# #5 [nginx internal] load build definition from Dockerfile
-# #5 transferring dockerfile: 350B done
-# #5 DONE 0.0s
-
-# #6 [nginx internal] load metadata for docker.io/library/debian:bullseye
-# #6 DONE 0.4s
-
-# #7 [redis internal] load .dockerignore
-# #7 transferring context: 2B done
-# #7 DONE 0.0s
-
-# #8 [mariadb internal] load .dockerignore
-# #8 transferring context: 34B done
-# #8 DONE 0.0s
-
-# #9 [nginx internal] load .dockerignore
-# #9 transferring context: 34B done
-# #9 DONE 0.0s
-
-# #10 [wordpress internal] load .dockerignore
-# #10 transferring context: 34B done
-# #10 DONE 0.0s
-
-# #11 [redis 1/6] FROM docker.io/library/debian:bullseye@sha256:8ec25a9073e8cc89a184a6256e219828196d75203375a8ad4f0977f3011f2115
-# #11 DONE 0.0s
-
-# #12 [nginx internal] load build context
-# #12 transferring context: 160B done
-# #12 DONE 0.0s
-
-# #13 [wordpress internal] load build context
-# #13 transferring context: 139B done
-# #13 DONE 0.0s
-
-# #14 [mariadb internal] load build context
-# #14 transferring context: 130B 0.0s done
-# #14 DONE 0.0s
-
-# #15 [redis internal] load build context
-# #15 transferring context: 60B done
-# #15 DONE 0.0s
-
-# #16 [nginx 3/6] COPY conf/nginx.conf /etc/nginx/nginx.conf
-# #16 CACHED
-
-# #17 [nginx 2/6] RUN apt-get update && apt-get install -y nginx openssl     && rm -rf /var/lib/apt/lists/*
-# #17 CACHED
-
-# #18 [nginx 4/6] COPY tools/nginx_setup.sh /nginx_setup.sh
-# #18 CACHED
-
-# #19 [nginx 5/6] RUN chmod +x /nginx_setup.sh
-# #19 CACHED
-
-# #20 [nginx 6/6] COPY conf/site.html /var/www/html/site.html
-# #20 CACHED
-
-# #21 [redis 2/3] RUN apt-get update && apt-get install -y redis-server     && rm -rf /var/lib/apt/lists/*
-# #21 CACHED
-
-# #22 [redis 3/3] COPY conf/redis.conf /etc/redis/redis.conf
-# #22 CACHED
-
-# #23 [wordpress  2/11] RUN apt update && apt install -y     php     php-fpm     php-mysql     php-redis     curl     tar     wget     unzip     netcat     && rm -rf /var/lib/apt/lists/*
-# #23 CACHED
-
-# #24 [wordpress  5/11] RUN curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar     && chmod +x /usr/local/bin/wp
-# #24 CACHED
-
-# #25 [wordpress  6/11] RUN mkdir -p /run/php
-# #25 CACHED
-
-# #26 [wordpress 10/11] COPY ./tools/redis_entrypoint.sh /usr/local/bin/redis_entrypoint.sh
-# #26 CACHED
-
-# #27 [wordpress  9/11] RUN chown -R www-data:www-data /var/www/html
-# #27 CACHED
-
-# #28 [wordpress  8/11] COPY ./tools/wp-config.php /var/www/html/wp-config.php
-# #28 CACHED
-
-# #29 [wordpress  7/11] COPY ./www.conf /etc/php/7.4/fpm/pool.d/www.conf
-# #29 CACHED
-
-# #30 [wordpress  3/11] WORKDIR /var/www/html
-# #30 CACHED
-
-# #31 [wordpress  4/11] RUN curl -o wordpress.tar.gz https://wordpress.org/latest.tar.gz &&     tar -xvzf wordpress.tar.gz &&     rm wordpress.tar.gz &&     mv wordpress/* . &&     rm -rf wordpress
-# #31 CACHED
-
-# #32 [wordpress 11/11] RUN chmod +x /usr/local/bin/redis_entrypoint.sh
-# #32 CACHED
-
-# #33 [mariadb 2/6] RUN apt-get update && apt-get install -y mariadb-server     && rm -rf /var/lib/apt/lists/*
-# #33 CACHED
-
-# #34 [mariadb 5/6] COPY tools/mariadb_setup.sh  mariadb_setup.sh
-# #34 CACHED
-
-# #35 [mariadb 4/6] COPY conf/mariadb.conf /etc/mysql/mariadb.conf.d/mariadb.conf
-# #35 CACHED
-
-# #36 [mariadb 3/6] RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
-# #36 CACHED
-
-# #37 [mariadb 6/6] RUN chmod +x /mariadb_setup.sh
-# #37 CACHED
-
-# #38 [wordpress] exporting to image
-# #38 exporting layers done
-# #38 writing image sha256:4d037d409369829fc9090e092a7128c2ba9395882fc5cf78647ee4f9e661d885 done
-# #38 naming to docker.io/library/srcs-wordpress done
-# #38 DONE 0.0s
-
-# #39 [nginx] exporting to image
-# #39 exporting layers done
-# #39 writing image sha256:4e41b3404e760e7c84cc553494f03fcf42aa2171d7e8d98691e82ca8d577774a done
-# #39 naming to docker.io/library/srcs-nginx done
-# #39 DONE 0.0s
-
-# #40 [mariadb] exporting to image
-# #40 exporting layers done
-# #40 writing image sha256:76063b2c132e99cc91d1f842eb766998ec086c983dc6fe98eb8bff92467ec3c1 done
-# #40 naming to docker.io/library/srcs-mariadb done
-# #40 DONE 0.0s
-
-# #41 [redis] exporting to image
-# #41 exporting layers done
-# #41 writing image sha256:65e85b0a8196c115ae9ab5bec8d112656734e6fe5740137ad0ce03f1c523d3c5 0.0s done
-# #41 naming to docker.io/library/srcs-redis done
-# #41 DONE 0.0s
-
-# #42 [nginx] resolving provenance for metadata file
-# #42 DONE 0.0s
-
-# #43 [mariadb] resolving provenance for metadata file
-# #43 DONE 0.0s
-
-# #44 [wordpress] resolving provenance for metadata file
-# #44 DONE 0.0s
-
-# #45 [redis] resolving provenance for metadata file
-# #45 DONE 0.0s
-# docker compose -f srcs/docker-compose.yml up -d --build
-# #1 [internal] load local bake definitions
-# #1 reading from stdin 1.94kB done
-# #1 DONE 0.0s
-
-# #2 [mariadb internal] load build definition from Dockerfile
-# #2 transferring dockerfile: 453B 0.0s done
-# #2 DONE 0.0s
-
-# #3 [wordpress internal] load build definition from Dockerfile
-# #3 transferring dockerfile: 1.10kB 0.0s done
-# #3 DONE 0.0s
-
-# #4 [nginx internal] load build definition from Dockerfile
-# #4 transferring dockerfile: 350B done
-# #4 DONE 0.0s
-
-# #5 [redis internal] load build definition from Dockerfile
-# #5 transferring dockerfile: 231B 0.0s done
-# #5 DONE 0.0s
-
-# #6 [redis internal] load metadata for docker.io/library/debian:bullseye
-# #6 DONE 0.3s
-
-# #7 [redis internal] load .dockerignore
-# #7 transferring context: 2B done
-# #7 DONE 0.0s
-
-# #8 [mariadb internal] load .dockerignore
-# #8 transferring context: 34B done
-# #8 DONE 0.0s
-
-# #9 [wordpress internal] load .dockerignore
-# #9 transferring context: 34B done
-# #9 DONE 0.0s
-
-# #10 [mariadb 1/3] FROM docker.io/library/debian:bullseye@sha256:8ec25a9073e8cc89a184a6256e219828196d75203375a8ad4f0977f3011f2115
-# #10 DONE 0.0s
-
-# #11 [nginx internal] load .dockerignore
-# #11 transferring context: 34B done
-# #11 DONE 0.0s
-
-# #12 [mariadb internal] load build context
-# #12 DONE 0.0s
-
-# #13 [redis internal] load build context
-# #13 transferring context: 60B 0.1s done
-# #13 DONE 0.1s
-
-# #10 [wordpress 1/3] FROM docker.io/library/debian:bullseye@sha256:8ec25a9073e8cc89a184a6256e219828196d75203375a8ad4f0977f3011f2115
-# #10 DONE 0.0s
-
-# #12 [mariadb internal] load build context
-# #12 transferring context: 130B 0.0s done
-# #12 DONE 0.1s
-
-# #14 [nginx internal] load build context
-# #14 transferring context: 160B 0.0s done
-# #14 DONE 0.1s
-
-# #15 [wordpress internal] load build context
-# #15 transferring context: 139B 0.0s done
-# #15 DONE 0.0s
-
-# #16 [redis 2/3] RUN apt-get update && apt-get install -y redis-server     && rm -rf /var/lib/apt/lists/*
-# #16 CACHED
-
-# #17 [redis 3/3] COPY conf/redis.conf /etc/redis/redis.conf
-# #17 CACHED
-
-# #18 [nginx 4/6] COPY tools/nginx_setup.sh /nginx_setup.sh
-# #18 CACHED
-
-# #19 [nginx 2/6] RUN apt-get update && apt-get install -y nginx openssl     && rm -rf /var/lib/apt/lists/*
-# #19 CACHED
-
-# #20 [nginx 3/6] COPY conf/nginx.conf /etc/nginx/nginx.conf
-# #20 CACHED
-
-# #21 [nginx 5/6] RUN chmod +x /nginx_setup.sh
-# #21 CACHED
-
-# #22 [nginx 6/6] COPY conf/site.html /var/www/html/site.html
-# #22 CACHED
-
-# #23 [wordpress  4/11] RUN curl -o wordpress.tar.gz https://wordpress.org/latest.tar.gz &&     tar -xvzf wordpress.tar.gz &&     rm wordpress.tar.gz &&     mv wordpress/* . &&     rm -rf wordpress
-# #23 CACHED
-
-# #24 [wordpress  3/11] WORKDIR /var/www/html
-# #24 CACHED
-
-# #25 [wordpress 10/11] COPY ./tools/redis_entrypoint.sh /usr/local/bin/redis_entrypoint.sh
-# #25 CACHED
-
-# #26 [wordpress  6/11] RUN mkdir -p /run/php
-# #26 CACHED
-
-# #27 [wordpress  2/11] RUN apt update && apt install -y     php     php-fpm     php-mysql     php-redis     curl     tar     wget     unzip     netcat     && rm -rf /var/lib/apt/lists/*
-# #27 CACHED
-
-# #28 [wordpress  8/11] COPY ./tools/wp-config.php /var/www/html/wp-config.php
-# #28 CACHED
-
-# #29 [wordpress  7/11] COPY ./www.conf /etc/php/7.4/fpm/pool.d/www.conf
-# #29 CACHED
-
-# #30 [wordpress  9/11] RUN chown -R www-data:www-data /var/www/html
-# #30 CACHED
-
-# #31 [wordpress  5/11] RUN curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar     && chmod +x /usr/local/bin/wp
-# #31 CACHED
-
-# #32 [wordpress 11/11] RUN chmod +x /usr/local/bin/redis_entrypoint.sh
-# #32 CACHED
-
-# #33 [mariadb 5/6] COPY tools/mariadb_setup.sh  mariadb_setup.sh
-# #33 CACHED
-
-# #34 [mariadb 2/6] RUN apt-get update && apt-get install -y mariadb-server     && rm -rf /var/lib/apt/lists/*
-# #34 CACHED
-
-# #35 [mariadb 4/6] COPY conf/mariadb.conf /etc/mysql/mariadb.conf.d/mariadb.conf
-# #35 CACHED
-
-# #36 [mariadb 3/6] RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
-# #36 CACHED
-
-# #37 [mariadb 6/6] RUN chmod +x /mariadb_setup.sh
-# #37 CACHED
-
-# #38 [nginx] exporting to image
-# #38 exporting layers done
-# #38 writing image sha256:4e41b3404e760e7c84cc553494f03fcf42aa2171d7e8d98691e82ca8d577774a done
-# #38 naming to docker.io/library/srcs-nginx
-# #38 naming to docker.io/library/srcs-nginx 0.0s done
-# #38 DONE 0.1s
-
-# #39 [wordpress] exporting to image
-# #39 exporting layers done
-# #39 writing image sha256:4d037d409369829fc9090e092a7128c2ba9395882fc5cf78647ee4f9e661d885 0.0s done
-# #39 naming to docker.io/library/srcs-wordpress done
-# #39 DONE 0.0s
-
-# #40 [redis] exporting to image
-# #40 exporting layers done
-# #40 writing image sha256:65e85b0a8196c115ae9ab5bec8d112656734e6fe5740137ad0ce03f1c523d3c5 0.0s done
-# #40 naming to docker.io/library/srcs-redis done
-# #40 DONE 0.0s
-
-# #41 [mariadb] exporting to image
-# #41 exporting layers done
-# #41 writing image sha256:76063b2c132e99cc91d1f842eb766998ec086c983dc6fe98eb8bff92467ec3c1 0.0s done
-# #41 naming to docker.io/library/srcs-mariadb 0.0s done
-# #41 DONE 0.1s
-
-# #42 [wordpress] resolving provenance for metadata file
-# #42 DONE 0.1s
-
-# #43 [nginx] resolving provenance for metadata file
-# #43 DONE 0.0s
-
-# #44 [redis] resolving provenance for metadata file
-# #44 DONE 0.1s
-
-# #45 [mariadb] resolving provenance for metadata file
-# #45 DONE 0.0s
+# #!/bin/bash
+# set -e
+
+# # Wait for MySQL
+# echo "Waiting for MySQL..."
+# until nc -z -v -w30 $MYSQL_HOST $MYSQL_PORT; do
+#   echo "MySQL is unavailable - sleeping"
+#   sleep 5
+# done
+
+# # Wait for Redis
+# echo "Waiting for Redis..."
+# until nc -z -v -w30 $REDIS_HOST $REDIS_PORT; do
+#   echo "Redis is unavailable - sleeping"
+#   sleep 5
+# done
+
+# # WordPress setup
+# if ! wp core is-installed --allow-root; then
+#   echo "Installing WordPress..."
+#   wp core install \
+#     --url="${WP_URL}" \
+#     --title="${WP_TITLE}" \
+#     --admin_user="${WP_ADMIN_USER}" \
+#     --admin_password="${WP_ADMIN_PASSWORD}" \
+#     --admin_email="${WP_ADMIN_EMAIL}" \
+#     --skip-email \
+#     --allow-root
+# else
+#   echo "WordPress already installed."
+# fi
+
+# # Configure Redis plugin
+# if ! wp plugin is-installed redis-cache --allow-root; then
+#   echo "Installing Redis plugin..."
+#   wp plugin install redis-cache --activate --allow-root
+# fi
+
+# echo "Enabling Redis cache..."
+# wp redis enable --allow-root || true
+
+# echo "✅ WordPress setup finished."
+
+# exec "$@"
