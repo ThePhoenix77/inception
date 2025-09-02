@@ -7,6 +7,17 @@ services:
     networks:
       - docker-network
     restart: always
+  
+  portainer:
+    build: ./requirements/bonus/portainer
+    container_name: portainer
+    restart: always
+    ports:
+      - "9443:9443"
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
 
   mariadb:
     build: ./requirements/mariadb
@@ -76,6 +87,8 @@ services:
 volumes:
   wordpress_data:
   mariadb_data:
+  redis_data:
+  portainer_data:
 
 networks:
   docker-network:
