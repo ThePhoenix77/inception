@@ -11,13 +11,25 @@ services:
   portainer:
     build: ./requirements/bonus/portainer
     container_name: portainer
-    restart: always
     ports:
       - "9443:9443"
       - "9000:9000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+    restart: always
+    
+  ftp:
+    build: ./requirements/bonus/ftp
+    container_name: ftp
+    volumes:
+      - wordpress_data:/var/www/html
+    ports:
+      - "21:21"
+      - "21100-21110:21100-21110"
+    networks:
+      - docker-network
+    restart: always
 
   mariadb:
     build: ./requirements/mariadb

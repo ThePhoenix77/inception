@@ -27,4 +27,7 @@ echo -e "\n\n\n"
 echo "       *portainer: "
 docker logs portainer
 echo -e "***************************************************\n"
+echo "       *ftp: "
+docker logs ftp
+echo -e "***************************************************\n"
 echo -e "\n\ndocker logs end\n"
