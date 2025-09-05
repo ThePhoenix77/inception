@@ -52,8 +52,7 @@ else
     wp plugin activate redis-cache --allow-root
 fi
 
-# Enable Redis cache (ignore errors if already enabled)
 wp redis enable --allow-root || true
 
-# Execute CMD passed to container
+#executing the CMD passed to container
 exec "$@"

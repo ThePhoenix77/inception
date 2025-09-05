@@ -2,6 +2,7 @@ services:
   adminer:
     build: ./requirements/bonus/adminer
     container_name: adminer
+    image: adminer
     ports:
       - "8080:8080"
     networks:
@@ -11,6 +12,7 @@ services:
   portainer:
     build: ./requirements/bonus/portainer
     container_name: portainer
+    image: portainer
     ports:
       - "9443:9443"
       - "9000:9000"
@@ -22,6 +24,8 @@ services:
   ftp:
     build: ./requirements/bonus/ftp
     container_name: ftp
+    image: ftp
+    env_file: .env
     volumes:
       - wordpress_data:/var/www/html
     ports:
@@ -34,16 +38,17 @@ services:
   mariadb:
     build: ./requirements/mariadb
     container_name: mariadb
+    image: mariadb
     env_file: .env
     volumes:
       - /home/tboussad/data/mariadb_data:/var/lib/mysql
     networks:
       - docker-network
     environment:
-      - DB_NAME=wordpress
-      - DB_USER=wp_user
-      - DB_PASS=wp_pass
-      - DB_ROOT_PASSWORD=rootpass
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$DB_ROOT_PASSWORD"]
       interval: 10s
@@ -54,6 +59,7 @@ services:
   redis:
     build: ./requirements/bonus/redis
     container_name: redis
+    image: redis
     volumes:
       - /home/tboussad/data/redis_data:/usr/local/etc/redis/redis.conf
     networks:
@@ -66,28 +72,30 @@ services:
         condition: service_healthy
     build: ./requirements/wordpress
     container_name: wordpress
+    image: wordpress
     environment:
-      WORDPRESS_DB_HOST: mariadb:3306
-      WORDPRESS_DB_USER: wp_user
-      WORDPRESS_DB_PASSWORD: wp_pass
-      WORDPRESS_DB_NAME: wordpress
-      WP_ADMIN_USER: admin
-      WP_ADMIN_PASSWORD: adminpass
-      WP_ADMIN_EMAIL: admin@example.com
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      WP_ADMIN_USER: ${WP_ADMIN_USER}
+      WP_ADMIN_PASSWORD: ${WP_ADMIN_PASSWORD}
+      WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
     volumes:
       - /home/tboussad/data/wordpress_data:/var/www/wordpress
     networks:
       - docker-network
     expose:
-      - "80"
       - "9000"
+      - "80"
     restart: always
 
   nginx:
     build: ./requirements/nginx
     container_name: nginx
+    image: nginx
     ports:
       - "443:443"
     volumes:
