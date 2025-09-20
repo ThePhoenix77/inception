@@ -34,16 +34,16 @@ if ! wp core is-installed --allow-root; then
     wp core install \
         --url="${WP_SITE_URL:-https://tboussad.42.fr}" \
         --title="${WP_SITE_TITLE:-MySite}" \
-        --admin_user="${WP_ADMIN_USER:-admin}" \
-        --admin_password="${WP_ADMIN_PASSWORD:-admin}" \
-        --admin_email="${WP_ADMIN_EMAIL:-admin@example.com}" \
+        --admin_user="$WP_ADMIN_USER" \
+        --admin_password="$WP_ADMIN_PASSWORD" \
+        --admin_email="$WP_ADMIN_EMAIL" \
         --skip-email \
         --allow-root
 fi
 
 # Redis config
-wp config set WP_REDIS_HOST redis --allow-root
-wp config set WP_REDIS_PORT 6379 --raw --allow-root
+# wp config set WP_REDIS_HOST redis --allow-root
+# wp config set WP_REDIS_PORT 6379 --raw --allow-root
 
 # Install & activate Redis plugin if not already
 if ! wp plugin is-installed redis-cache --allow-root; then

@@ -13,6 +13,6 @@ RUN curl -L https://github.com/portainer/portainer/releases/download/2.21.3/port
 
 # 9443 = HTTPS
 # 9000 = HTTP
-EXPOSE 9443 9000 8000
+EXPOSE 9443 9000
 
 CMD ["/opt/portainer/portainer"]

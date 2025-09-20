@@ -13,11 +13,3 @@ RUN chmod +x /mariadb_setup.sh
 EXPOSE 3306
 
 ENTRYPOINT ["/mariadb_setup.sh"]
-# CMD ["mysqld_safe"]
-
-# MYSQL_DATABASE=wordpress
-# MYSQL_USER=wp_user
-# MYSQL_PASSWORD=wp_pass
-# # MYSQL_SUPER=superuser42
-# # MYSQL_SUPER_PASSWORD=superpassword
-# MYSQL_ROOT_PASSWORD=rootpass
