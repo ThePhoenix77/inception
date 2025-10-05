@@ -17,6 +17,9 @@ fi
 
 cd /var/www/wordpress
 
+chown -R www-data:www-data .
+chmod -R 755 .
+
 # Generate wp-config.php if it doesn't exist
 if [ ! -f wp-config.php ]; then
     echo "Generating wp-config.php..."

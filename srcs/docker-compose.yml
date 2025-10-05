@@ -6,7 +6,7 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - docker-network
+      - inception
     restart: always
   
   portainer:
@@ -32,7 +32,7 @@ services:
       - "21:21"
       - "21100-21110:21100-21110"
     networks:
-      - docker-network
+      - inception
     restart: always
 
   mariadb:
@@ -43,7 +43,7 @@ services:
     volumes:
       - /home/tboussad/data/mariadb_data:/var/lib/mysql
     networks:
-      - docker-network
+      - inception
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root"]
       interval: 10s
@@ -58,7 +58,7 @@ services:
     volumes:
       - /home/tboussad/data/redis_data:/usr/local/etc/redis/redis.conf
     networks:
-      - docker-network
+      - inception
     restart: always
 
   wordpress:
@@ -72,7 +72,7 @@ services:
     volumes:
       - /home/tboussad/data/wordpress_data:/var/www/wordpress
     networks:
-      - docker-network
+      - inception
     expose:
       - "9000"
       - "80"
@@ -87,15 +87,28 @@ services:
     volumes:
       - /home/tboussad/data/wordpress_data:/var/www/wordpress
     networks:
-      - docker-network
+      - inception
+    depends_on:
+      - wordpress
+      - site
+    restart: always
+  
+  site:
+    build: ./requirements/bonus/site
+    container_name: site
+    image: site
+    expose:
+      - "8080"
+    networks:
+      - inception
     restart: always
 
 volumes:
   wordpress_data:
   mariadb_data:
-  redis_data:
   portainer_data:
 
 networks:
-  docker-network:
+  inception:
+    name: inception
     driver: bridge
