@@ -42,6 +42,13 @@ if ! wp core is-installed --allow-root; then
         --admin_email="$WP_ADMIN_EMAIL" \
         --skip-email \
         --allow-root
+    
+    echo "Creating additional WordPress users..."
+    wp user create "$WP_EDITOR_USER" "$WP_EDITOR_EMAIL" \
+        --role=editor \
+        --user_pass="$WP_EDITOR_PASSWORD" \
+        --allow-root
+    
 fi
 
 # Redis config
