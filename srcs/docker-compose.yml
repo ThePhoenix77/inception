@@ -98,7 +98,7 @@ services:
     container_name: site
     image: site
     expose:
-      - "8080"
+      - "80"
     networks:
       - inception
     restart: always

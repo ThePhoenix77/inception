@@ -1,9 +1,9 @@
 FROM nginx:bullseye
 
-RUN apt update && apt upgrade -y && mkdir -p /usr/share/nginx/html
+RUN apt update && apt upgrade -y
 
 COPY tools/site.html /usr/share/nginx/html/index.html
 
-EXPOSE 8080
+EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
