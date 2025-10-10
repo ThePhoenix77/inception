@@ -2,14 +2,14 @@
 set -e
 
 # -------------------------------
-# Set permissions
+# setting permissions
 # -------------------------------
 chmod 755 /run/mysqld
 chmod 700 /var/lib/mysql
 chown -R mysql:mysql /var/lib/mysql /run/mysqld
 
 # -------------------------------
-# Initialize MariaDB if empty
+# initializing MariaDB if empty
 # -------------------------------
 if [ ! -d "/var/lib/mysql/mysql" ]; then
     echo "Initializing MariaDB database..."

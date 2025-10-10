@@ -27,7 +27,8 @@ services:
     image: ftp
     env_file: .env
     volumes:
-      - wordpress_data:/var/www/html
+      - /home/tboussad/data/wordpress_data:/var/www/wordpress
+      # - wordpress_data:/var/www/html
     ports:
       - "21:21"
       - "21100-21110:21100-21110"
@@ -75,7 +76,6 @@ services:
       - inception
     expose:
       - "9000"
-      - "80"
     restart: always
 
   nginx:
@@ -104,9 +104,12 @@ services:
     restart: always
 
 volumes:
-  wordpress_data:
   mariadb_data:
+    name: mariadb_data
+  wordpress_data:
+    name: wordpress_data
   portainer_data:
+    name: portainer_data
 
 networks:
   inception:
