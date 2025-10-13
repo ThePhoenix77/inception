@@ -7,8 +7,6 @@ COPY conf/nginx.conf /etc/nginx/nginx.conf
 COPY tools/nginx_setup.sh /nginx_setup.sh
 RUN chmod +x /nginx_setup.sh
 
-# COPY conf/site.html /var/www/wordpress/site.html
-
 EXPOSE 443
 
 CMD ["/nginx_setup.sh"]

@@ -14,3 +14,8 @@
 
 
 https://urn.fi/URN:ISSN:1234-5679
+
+
+
+
+Run PHP as `www-data`, listen on port `9000`, and dynamically manage up to 5 PHP workers to handle incoming NGINX requests efficiently.”

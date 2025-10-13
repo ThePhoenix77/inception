@@ -18,7 +18,6 @@ services:
       - "9000:9000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
     restart: always
     
   ftp:
@@ -27,8 +26,7 @@ services:
     image: ftp
     env_file: .env
     volumes:
-      - /home/tboussad/data/wordpress_data:/var/www/wordpress
-      # - wordpress_data:/var/www/html
+      - wordpress_data:/var/www/html
     ports:
       - "21:21"
       - "21100-21110:21100-21110"
@@ -42,7 +40,7 @@ services:
     image: mariadb
     env_file: .env
     volumes:
-      - /home/tboussad/data/mariadb_data:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
     networks:
       - inception
     healthcheck:
@@ -56,8 +54,6 @@ services:
     build: ./requirements/bonus/redis
     container_name: redis
     image: redis
-    volumes:
-      - /home/tboussad/data/redis_data:/usr/local/etc/redis/redis.conf
     networks:
       - inception
     restart: always
@@ -71,7 +67,7 @@ services:
     container_name: wordpress
     image: wordpress
     volumes:
-      - /home/tboussad/data/wordpress_data:/var/www/wordpress
+      - wordpress_data:/var/www/wordpress
     networks:
       - inception
     expose:
@@ -85,7 +81,7 @@ services:
     ports:
       - "443:443"
     volumes:
-      - /home/tboussad/data/wordpress_data:/var/www/wordpress
+      - wordpress_data:/var/www/wordpress
     networks:
       - inception
     depends_on:
@@ -106,10 +102,18 @@ services:
 volumes:
   mariadb_data:
     name: mariadb_data
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/tboussad/data/mariadb_data
   wordpress_data:
     name: wordpress_data
-  portainer_data:
-    name: portainer_data
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/tboussad/data/wordpress_data
 
 networks:
   inception:

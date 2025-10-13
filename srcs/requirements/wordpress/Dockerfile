@@ -14,7 +14,6 @@ RUN mkdir -p /run/php
 
 #php-fpm pool config
 COPY www.conf /etc/php/7.4/fpm/pool.d/www.conf
-
 COPY tools/wordpress_entrypoint.sh /usr/local/bin/wordpress_entrypoint.sh
 RUN chmod +x /usr/local/bin/wordpress_entrypoint.sh
 

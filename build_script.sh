@@ -40,5 +40,5 @@ sleep 3s
 echo "       *site: "
 docker logs site
 echo -e "*******************************************************************************************************\n"
-sleep 3s
 echo -e "\n\ndocker logs end\n"
+
